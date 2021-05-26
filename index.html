@@ -4,10 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
-    
+    <div class='main-container'>
+        <div class='add-ticket-dialog invisible'>
+            Добавить тикет
+            <form class='add-ticket-form'>
+                <p class='form-input-label'>Краткое описание</p>
+                <input type='text' class='add-form-input' name='short-description'>
+                <p class='form-input-label'>Подробное описание</p>
+                <textarea type='text' class='add-form-input' name='long-description'></textarea>
+                <div>
+                    <button class='cancel-adding-button'>Отмена</button>
+                    <button class='submit-button'>ОК</button>
+                </div>
+            </form>
+        </div>
+        <div class='add-button-container'>
+            <button id='add-button'>Добавить тикет</button>
+        </div>
+        <div class='tickets-container'></div>
+    </div>
 </body>
 <script src='index.js'></script>
 </html>

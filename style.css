@@ -1,0 +1,118 @@
+img {
+  padding: 0;
+  margin: 0;
+}
+
+.main-container {
+  position: relative;
+  width: 35%;
+  min-width: 450px;
+}
+
+.add-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+#add-button {
+  width: 20%;
+  min-width: 120px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.ticket-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin-top: -2px;
+  border: 2px solid grey;
+}
+
+.ticket-name {
+  width: 55%;
+}
+
+.circle {
+  width: 25px;
+  height: 25px;
+  border: 2px solid grey;
+  border-radius: 15px;
+  background-color: white;
+}
+
+.ready-status-icon {
+  width: 20px;
+  padding: 2px;
+}
+
+p {
+  width: 30%;
+  padding: 0;
+  margin: 0;
+}
+
+.ticket-name {
+  margin-left: 20px;
+}
+
+.data-time-indicator {
+  margin-left: 80px;
+}
+
+.change-button {
+  padding: 0;
+  margin: 0;
+}
+
+.delete-button {
+  margin-left: 5px;
+}
+
+.buttons-container {
+  min-width: 55px;
+}
+
+.pencil {
+  width: 12px;
+}
+
+.invisible {
+  display: none;
+}
+
+.add-ticket-dialog {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  border: 2px solid grey;
+  border-radius: 15px;
+  padding-top: 10px;
+  text-align: center;
+  background-color: white;
+}
+
+.add-ticket-form {
+  display: block;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.form-input-label {
+  width: 100%;
+  text-align: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.add-form-input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+}
