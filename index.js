@@ -44,7 +44,7 @@ function domBuild (tickets) {
     }
 }
 
-const url = `http://heroku-iliakra.herokuapp.com/?method=allTickets`;
+const url = `https://heroku-iliakra.herokuapp.com/?method=allTickets`;
 const xhr = new XMLHttpRequest();
 xhr.open('GET', url ,true);
 xhr.addEventListener('load', () => {
@@ -78,7 +78,7 @@ let addTicketHandler = () => {
     console.log('formData',event.currentTarget);
     
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', `http://heroku-iliakra.herokuapp.com/?method=createTicket`);
+    xhr.open('POST', `https://heroku-iliakra.herokuapp.com/?method=createTicket`);
     xhr.addEventListener('load', () => {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
