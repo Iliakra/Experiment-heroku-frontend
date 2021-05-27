@@ -44,21 +44,25 @@ function domBuild (tickets) {
     }
 }
 
-const url = `https://heroku-iliakra.herokuapp.com/?method=allTickets`;
-const xhr = new XMLHttpRequest();
-xhr.open('GET', url ,true);
-xhr.addEventListener('load', () => {
-    if (xhr.status >= 200 && xhr.status < 300) {
-        try {
-            const data = JSON.parse(xhr.responseText);
-            let tickets = data;
-            domBuild(tickets);
-        } catch (e) {
-            console.error(e);
+function initialRequest () {
+    const url = `https://heroku-iliakra.herokuapp.com/?method=allTickets`;
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url ,true);
+    xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+            try {
+                const data = JSON.parse(xhr.responseText);
+                let tickets = data;
+                domBuild(tickets);
+            } catch (e) {
+                console.error(e);
+            }
         }
-    }
-});
-xhr.send();
+    });
+    xhr.send();
+}
+
+initialRequest();
 
 let openDialogWindow = document.getElementsByClassName('add-ticket-dialog')[0];
 
@@ -75,15 +79,23 @@ let addTicketHandler = () => {
     event.preventDefault();
     let formData = new FormData(event.currentTarget);
     formData.append('id', null);
-    console.log('formData',event.currentTarget);
+    
+    //console.log('formData',event.currentTarget);
     
     const xhr = new XMLHttpRequest();
     xhr.open('POST', `https://heroku-iliakra.herokuapp.com/?method=createTicket`);
     xhr.addEventListener('load', () => {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
-                const data = JSON.parse(xhr.response);
-                console.log(data);
+                if (xhr.responseText === 'OK') {
+                    let ticketsContainerElement = document.getElementsByClassName('tickets-container')[0];
+                    ticketsContainerElement.remove();
+                    let newTicketsContainer = document.createElement('div');
+                    newTicketsContainer.classList.add('tickets-container');
+                    let mainContainer = document.getElementsByClassName('main-container')[0];
+                    mainContainer.appendChild(newTicketsContainer);
+                    initialRequest();
+                }
             } catch (e) {
                 console.error(e);
             }
