@@ -10,22 +10,37 @@
 <body>
     <div class='main-container'>
         <div class='add-ticket-dialog invisible'>
-            Добавить тикет
+            <p class="dialog-title"></p>
             <form class='add-ticket-form'>
                 <p class='form-input-label'>Краткое описание</p>
                 <input type='text' class='add-form-input' name='short_description'>
                 <p class='form-input-label'>Подробное описание</p>
                 <textarea type='text' class='add-form-input' name='long_description'></textarea>
-                <div>
-                    <button class='cancel-adding-button'>Отмена</button>
-                    <button class='submit-button'>ОК</button>
+                <div class='radio-buttons-container'>
+                    <p class='radio-buttons-label'>Статус</p>
+                    <p><input name="status" type="radio" value="false" checked>Не сделано</p>
+                    <p><input name="status" type="radio" value="true">Готово</p>
+                </div>
+                <div class='form-buttons-container'>
+                    <button class='cancel-adding-button button'>Отмена</button>
+                    <button class='submit-button button'>ОК</button>
                 </div>
             </form>
+        </div>
+        <div class='delete-ticket-dialog invisible'>
+            <p class='delete-ticket-dialog-title'>Удалить тикет</p>
+            <p class='delete-ticket-dialog-textContent'>Вы уверены, что хотите удалить тикет?</p>
+            <p class='delete-ticket-dialog-textContent'>Это действительно необратимо.</p>
+            <div class='form-buttons-container'>
+                <button class='cancel-deletion-button button'>Отмена</button>
+                <button class='deletion-button button'>ОК</button>
+            </div>
         </div>
         <div class='add-button-container'>
             <button id='add-button'>Добавить тикет</button>
         </div>
         <div class='tickets-container'></div>
+        <div class='donut invisible'></div>
     </div>
 </body>
 <script src='index.js'></script>
