@@ -1,0 +1,2 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/oekt1spdu2wpeacx?svg=true)](https://ci.appveyor.com/project/Ilya/experiment-heroku-frontend)
+https://iliakra.github.io/Experiment-heroku-frontend/
