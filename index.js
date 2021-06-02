@@ -1,3 +1,6 @@
+import domBuild from './helpers'
+
+/*
 function domBuild (tickets) {
     let ticketsContainer = document.getElementsByClassName('tickets-container')[0];
     let cancelAddingButton = document.getElementsByClassName('cancel-adding-button')[0];
@@ -69,6 +72,7 @@ function domBuild (tickets) {
         ticketsContainer.appendChild(ticketContainer);
     }
 }
+*/
 
 let preloader = document.getElementsByClassName('donut')[0];
 console.log('preloader',preloader);
