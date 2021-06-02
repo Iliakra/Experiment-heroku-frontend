@@ -5,6 +5,13 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 /* eslint-disable no-restricted-globals */
+
+const preloader = document.getElementsByClassName('donut')[0];
+const openDialogWindow = document.getElementsByClassName('add-ticket-dialog')[0];
+const deleteTicketDialogWindow = document.getElementsByClassName('delete-ticket-dialog')[0];
+const form = document.getElementsByClassName('add-ticket-form')[0];
+const addTicketDialogOpenButton = document.getElementById('add-button');
+
 function domBuild(tickets) {
   const ticketsContainer = document.getElementsByClassName('tickets-container')[0];
   const cancelAddingButton = document.getElementsByClassName('cancel-adding-button')[0];
@@ -76,9 +83,6 @@ function domBuild(tickets) {
   }
 }
 
-const preloader = document.getElementsByClassName('donut')[0];
-console.log('preloader', preloader);
-
 function initialRequest() {
   preloader.classList.remove('invisible');
   const url = 'https://heroku-iliakra.herokuapp.com/?method=allTickets';
@@ -101,10 +105,6 @@ function initialRequest() {
 
 initialRequest();
 
-const openDialogWindow = document.getElementsByClassName('add-ticket-dialog')[0];
-const deleteTicketDialogWindow = document.getElementsByClassName('delete-ticket-dialog')[0];
-const form = document.getElementsByClassName('add-ticket-form')[0];
-
 const deleteTicketDialogCloseHandler = () => {
   event.preventDefault();
   form.reset();
@@ -116,6 +116,16 @@ const addTicketDialogCloseHandler = () => {
   form.reset();
   openDialogWindow.classList.add('invisible');
 };
+
+const openAddTicketDialog_handler = (e) => {
+  e.stopPropagation();
+  const title = document.getElementsByClassName('dialog-title')[0];
+  title.textContent = 'Добавить тикет';
+  form.addEventListener('submit', addTicketHandler);
+  openDialogWindow.classList.remove('invisible');
+};
+
+addTicketDialogOpenButton.addEventListener('click', openAddTicketDialog_handler);
 
 const addTicketHandler = () => {
   event.preventDefault();
@@ -147,48 +157,6 @@ const addTicketHandler = () => {
   form.reset();
   addTicketDialogCloseHandler();
   form.removeEventListener('submit', addTicketHandler);
-};
-
-const openAddTicketDialog_handler = (e) => {
-  e.stopPropagation();
-  const title = document.getElementsByClassName('dialog-title')[0];
-  title.textContent = 'Добавить тикет';
-  form.addEventListener('submit', addTicketHandler);
-  openDialogWindow.classList.remove('invisible');
-};
-
-const changeTicketHandler = () => {
-  event.preventDefault();
-  preloader.classList.remove('invisible');
-  const submitButton = document.getElementsByClassName('submit-button')[0];
-  const requestedId = submitButton.dataset.submitid;
-  const formData = new FormData(event.currentTarget);
-  formData.append('id', requestedId);
-
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', 'https://heroku-iliakra.herokuapp.com/?method=createTicket');
-  xhr.addEventListener('load', () => {
-    preloader.classList.add('invisible');
-    if (xhr.status >= 200 && xhr.status < 300) {
-      try {
-        if (xhr.responseText === 'OK') {
-          const ticketsContainerElement = document.getElementsByClassName('tickets-container')[0];
-          ticketsContainerElement.remove();
-          const newTicketsContainer = document.createElement('div');
-          newTicketsContainer.classList.add('tickets-container');
-          const mainContainer = document.getElementsByClassName('main-container')[0];
-          mainContainer.appendChild(newTicketsContainer);
-          initialRequest();
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  });
-  xhr.send(formData);
-  addTicketDialogCloseHandler();
-  form.reset();
-  form.removeEventListener('submit', changeTicketHandler);
 };
 
 const openChangeTicketDialog_handler = (e) => {
@@ -232,6 +200,51 @@ const openChangeTicketDialog_handler = (e) => {
   xhr.send();
 };
 
+const changeTicketHandler = () => {
+  event.preventDefault();
+  preloader.classList.remove('invisible');
+  const submitButton = document.getElementsByClassName('submit-button')[0];
+  const requestedId = submitButton.dataset.submitid;
+  const formData = new FormData(event.currentTarget);
+  formData.append('id', requestedId);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://heroku-iliakra.herokuapp.com/?method=createTicket');
+  xhr.addEventListener('load', () => {
+    preloader.classList.add('invisible');
+    if (xhr.status >= 200 && xhr.status < 300) {
+      try {
+        if (xhr.responseText === 'OK') {
+          const ticketsContainerElement = document.getElementsByClassName('tickets-container')[0];
+          ticketsContainerElement.remove();
+          const newTicketsContainer = document.createElement('div');
+          newTicketsContainer.classList.add('tickets-container');
+          const mainContainer = document.getElementsByClassName('main-container')[0];
+          mainContainer.appendChild(newTicketsContainer);
+          initialRequest();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  });
+  xhr.send(formData);
+  addTicketDialogCloseHandler();
+  form.reset();
+  form.removeEventListener('submit', changeTicketHandler);
+};
+
+const openDeleteTicketDialog_handler = (e) => {
+  e.stopPropagation();
+  const targetElement = e.currentTarget;
+  const deleteTicketId = targetElement.dataset.id;
+
+  const okButton = document.getElementsByClassName('deletion-button')[0];
+  okButton.setAttribute('data-deleteId', deleteTicketId);
+  okButton.addEventListener('click', deleteTicket_handler);
+  deleteTicketDialogWindow.classList.remove('invisible');
+};
+
 const deleteTicket_handler = (e) => {
   const targetElement = e.currentTarget;
   const deleteTicketId = targetElement.dataset.deleteid;
@@ -260,17 +273,6 @@ const deleteTicket_handler = (e) => {
   });
   xhr.send();
   deleteTicketDialogCloseHandler();
-};
-
-const openDeleteTicketDialog_handler = (e) => {
-  e.stopPropagation();
-  const targetElement = e.currentTarget;
-  const deleteTicketId = targetElement.dataset.id;
-
-  const okButton = document.getElementsByClassName('deletion-button')[0];
-  okButton.setAttribute('data-deleteId', deleteTicketId);
-  okButton.addEventListener('click', deleteTicket_handler);
-  deleteTicketDialogWindow.classList.remove('invisible');
 };
 
 const showDescription_handler = (e) => {
@@ -306,6 +308,3 @@ const showDescription_handler = (e) => {
     xhr.send();
   }
 };
-
-const addTicketDialogOpenButton = document.getElementById('add-button');
-addTicketDialogOpenButton.addEventListener('click', openAddTicketDialog_handler);
